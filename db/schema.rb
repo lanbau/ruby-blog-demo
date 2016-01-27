@@ -13,40 +13,22 @@
 
 ActiveRecord::Schema.define(version: 20160122160709) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "articles", force: :cascade do |t|
-    t.string   "title"
-    t.text     "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "title",      limit: 255
+    t.text     "text",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string   "commenter"
-    t.text     "body"
-    t.integer  "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "commenter",  limit: 255
+    t.text     "body",       limit: 65535
+    t.integer  "article_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "comments", ["article_id"], name: "index_comments_on_article_id", using: :btree
-
-  create_table "company", force: :cascade do |t|
-    t.text    "name",               null: false
-    t.integer "age",                null: false
-    t.string  "address", limit: 50
-    t.float   "salary"
-  end
-
-  create_table "persons", id: false, force: :cascade do |t|
-    t.integer "personid"
-    t.string  "lastname",  limit: 255
-    t.string  "firstname", limit: 255
-    t.string  "address",   limit: 255
-    t.string  "city",      limit: 255
-  end
 
   add_foreign_key "comments", "articles"
 end
